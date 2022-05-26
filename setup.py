@@ -27,5 +27,10 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     ],
+    project_urls={
+        "Issues": "https://github.com/RichardDally/PySteamUpload/issues",
+        "Source Code": "https://github.com/RichardDally/PySteamUpload",
+        "Releases": "https://github.com/RichardDally/PySteamUpload/releases"
+    },
     python_requires='>=3.8',
 )

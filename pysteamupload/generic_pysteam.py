@@ -7,7 +7,6 @@ import requests
 import subprocess
 from pathlib import Path
 from loguru import logger
-from dotenv import load_dotenv
 from abc import ABCMeta, abstractmethod
 
 
@@ -16,7 +15,6 @@ class GenericPySteam:
     steam_cdn_url: str = "https://steamcdn-a.akamaihd.net/client/installer"
 
     def __init__(self):
-        load_dotenv()
         self.root_directory: Path = Path(tempfile.gettempdir(), "SteamCMD")
         if not self.is_steamcmd_available():
             logger.info("SteamCMD seems not installed, downloading it.")

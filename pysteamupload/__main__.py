@@ -1,5 +1,7 @@
+import os
 import argparse
 import platform
+from dotenv import load_dotenv
 from pysteamupload.linux_pysteam import LinuxPySteam
 from pysteamupload.windows_pysteam import WindowsPySteam
 
@@ -13,7 +15,26 @@ def parse_argv() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def check_required_variables() -> None:
+    required_env_vars = (
+        "STEAM_USERNAME",
+        "STEAM_PASSWORD",
+        "STEAM_CONFIG_VDF_FILE_CONTENT",
+        "STEAM_SSFN_FILENAME",
+        "STEAM_SSFN_FILE_CONTENT",
+    )
+    missing_keys = []
+    for key in required_env_vars:
+        if key not in os.environ:
+            missing_keys.append(key)
+    if missing_keys:
+        raise KeyError(f"Missing environment variables {missing_keys}")
+
+
 def main() -> None:
+    load_dotenv()
+    check_required_variables()
+
     operating_system: str = platform.system().lower()
     if operating_system == "windows":
         ps = WindowsPySteam()

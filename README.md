@@ -41,3 +41,9 @@ ABCDEFDABCDEFDABCDEFDABCDEFDABCDEFDABCDEFD"
 ### Call PySteamUpload by command line
 
 `python -m pysteamupload --app_id="123456" --depot_id="1234567" --build_description="My first upload" --content_path="C:\Temp\MyBinariesAreLocatedHere"`
+
+### Packaging
+
+- `python -m install twine setuptools wheel`
+- `python setup.py sdist bdist_wheel`
+- `python -m twine upload dist/*`

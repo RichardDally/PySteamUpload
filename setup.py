@@ -10,7 +10,7 @@ with open("requirements.txt") as f:
 setuptools.setup(
     author="Richard Dally",
     name="pysteamupload",
-    version="0.1.7",
+    version="0.1.8",
     description="SteamCMD leveraged by CPython to upload binaries",
     url="https://github.com/RichardDally/PySteamUpload",
     license="GNU Lesser General Public License v3.0",

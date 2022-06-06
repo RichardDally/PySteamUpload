@@ -8,7 +8,7 @@ import subprocess
 from pathlib import Path
 from loguru import logger
 from abc import ABCMeta, abstractmethod
-from pysteamupload_templates import DEPOT, APP_BUILD
+from pysteamupload.pysteamupload_templates import DEPOT, APP_BUILD
 
 
 class GenericPySteamUpload:

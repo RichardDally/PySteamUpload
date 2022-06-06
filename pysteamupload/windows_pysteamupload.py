@@ -1,9 +1,9 @@
 import zipfile
 from abc import abstractmethod
-from pysteamupload.generic_pysteam import GenericPySteam
+from pysteamupload.generic_pysteamupload import GenericPySteamUpload
 
 
-class WindowsPySteam(GenericPySteam):
+class WindowsPySteamUpload(GenericPySteamUpload):
     @abstractmethod
     def get_steamcmd_local_filename(self) -> str:
         return "steamcmd.exe"

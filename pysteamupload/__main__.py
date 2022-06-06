@@ -2,8 +2,8 @@ import os
 import argparse
 import platform
 from dotenv import load_dotenv
-from pysteamupload.linux_pysteam import LinuxPySteam
-from pysteamupload.windows_pysteam import WindowsPySteam
+from pysteamupload.linux_pysteamupload import LinuxPySteamUpload
+from pysteamupload.windows_pysteamupload import WindowsPySteamUpload
 
 
 def parse_argv() -> argparse.Namespace:
@@ -37,9 +37,9 @@ def main() -> None:
 
     operating_system: str = platform.system().lower()
     if operating_system == "windows":
-        ps = WindowsPySteam()
+        ps = WindowsPySteamUpload()
     elif operating_system == "linux":
-        ps = LinuxPySteam()
+        ps = LinuxPySteamUpload()
     else:
         raise RuntimeError(f"Unsupported operating system [{operating_system}]")
 

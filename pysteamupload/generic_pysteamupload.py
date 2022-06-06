@@ -4,14 +4,14 @@ import base64
 import shutil
 import tempfile
 import requests
-import templates
 import subprocess
 from pathlib import Path
 from loguru import logger
 from abc import ABCMeta, abstractmethod
+from pysteamupload_templates import DEPOT, APP_BUILD
 
 
-class GenericPySteam:
+class GenericPySteamUpload:
     __metaclass__ = ABCMeta
     steam_cdn_url: str = "https://steamcdn-a.akamaihd.net/client/installer"
 
@@ -98,9 +98,9 @@ class GenericPySteam:
             content: bytes = base64.b64decode(s=os.getenv(environ_key))
             with open(destination, "wb" if binary_file else "w") as f:
                 f.write(content if binary_file else content.decode())
-        except UnicodeDecodeError as exception:
+        except UnicodeDecodeError:
             logger.error(f"Check [{environ_key}] value, unable to decode")
-        except Exception as exception:
+        except Exception:
             logger.error(f"Unable to create [{destination.name}]")
 
     def call_steamcmd(self, args):
@@ -126,7 +126,7 @@ class GenericPySteam:
 
     def create_depot_vdf_file(self, depot_id: str) -> None:
         # Read template
-        depot_vdf = vdf.loads(templates.DEPOT)
+        depot_vdf = vdf.loads(DEPOT)
 
         # Set depot id
         depot_vdf["DepotBuildConfig"]["DepotID"] = depot_id
@@ -147,7 +147,7 @@ class GenericPySteam:
             content_path: Path,
     ) -> None:
         # Read template
-        app_build = vdf.loads(templates.APP_BUILD)
+        app_build = vdf.loads(APP_BUILD)
 
         # Prepare app build file
         app_build["appbuild"]["appid"] = app_id

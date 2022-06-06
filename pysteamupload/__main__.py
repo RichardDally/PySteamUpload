@@ -1,6 +1,7 @@
 import os
 import argparse
 import platform
+import sys
 from dotenv import load_dotenv
 from pysteamupload.linux_pysteamupload import LinuxPySteamUpload
 from pysteamupload.windows_pysteamupload import WindowsPySteamUpload
@@ -43,13 +44,14 @@ def main() -> None:
     else:
         raise RuntimeError(f"Unsupported operating system [{operating_system}]")
 
-    args = parse_argv()
-    ps.upload(
+    args: argparse.Namespace = parse_argv()
+    exit_code: int = ps.upload(
         app_id=args.app_id,
         depot_id=args.depot_id,
         build_description=args.build_description,
         content_path=args.content_path,
     )
+    sys.exit(exit_code)
 
 
 if __name__ == '__main__':

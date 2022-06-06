@@ -103,17 +103,20 @@ class GenericPySteamUpload:
         except Exception:
             logger.error(f"Unable to create [{destination.name}]")
 
-    def call_steamcmd(self, args):
+    def call_steamcmd(self, args) -> int:
         timeout_in_seconds = 30
         try:
             subprocess_args = (self.get_steamcmd_path(), *args, "+quit")
             subprocess.check_call(subprocess_args, timeout=timeout_in_seconds)
+            return 0
         except subprocess.TimeoutExpired:
             # SteamGuard is probably waiting asking for a 2 factor authentication password
             logger.error(f"SteamCMD timed out ({timeout_in_seconds} seconds)")
         except subprocess.CalledProcessError as exception:
             if exception.returncode != 7:
-                logger.exception(exception)
+                logger.error(exception)
+            return exception.returncode
+        return 1
 
     def create_upload_directory(self) -> None:
         upload_path = self.get_upload_path()
@@ -167,7 +170,7 @@ class GenericPySteamUpload:
             depot_id: str,
             build_description: str,
             content_path: Path,
-    ) -> None:
+    ) -> int:
         # Prepare vdf files to upload
         self.create_upload_directory()
         self.create_depot_vdf_file(depot_id=depot_id)
@@ -182,7 +185,7 @@ class GenericPySteamUpload:
             f"+login {os.getenv('STEAM_USERNAME')} {os.getenv('STEAM_PASSWORD')}",
             f"+run_app_build {self.get_app_build_path()}"
         )
-        self.call_steamcmd(args)
+        return self.call_steamcmd(args)
 
     @abstractmethod
     def get_steamcmd_local_filename(self) -> str:

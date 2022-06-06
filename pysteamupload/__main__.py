@@ -39,7 +39,7 @@ def main() -> None:
     if operating_system == "windows":
         ps = WindowsPySteam()
     elif operating_system == "linux":
-        ps = LinuxPySteam
+        ps = LinuxPySteam()
     else:
         raise RuntimeError(f"Unsupported operating system [{operating_system}]")
 

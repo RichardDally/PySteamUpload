@@ -4,6 +4,7 @@ import base64
 import shutil
 import tempfile
 import requests
+import templates
 import subprocess
 from pathlib import Path
 from loguru import logger
@@ -125,8 +126,7 @@ class GenericPySteam:
 
     def create_depot_vdf_file(self, depot_id: str) -> None:
         # Read template
-        with open("templates/depot.txt", "r") as f:
-            depot_vdf = vdf.load(f)
+        depot_vdf = vdf.loads(templates.DEPOT)
 
         # Set depot id
         depot_vdf["DepotBuildConfig"]["DepotID"] = depot_id
@@ -147,8 +147,7 @@ class GenericPySteam:
             content_path: Path,
     ) -> None:
         # Read template
-        with open("templates/app_build.txt", "r") as f:
-            app_build = vdf.load(f)
+        app_build = vdf.loads(templates.APP_BUILD)
 
         # Prepare app build file
         app_build["appbuild"]["appid"] = app_id

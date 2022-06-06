@@ -1,5 +1,6 @@
 import setuptools
 
+
 with open("readme.md", "r") as fh:
     long_description = fh.read()
 
@@ -9,15 +10,12 @@ with open("requirements.txt") as f:
 setuptools.setup(
     author="Richard Dally",
     name="pysteamupload",
-    version="0.1.5",
+    version="0.1.6",
     description="SteamCMD leveraged by CPython to upload binaries",
     url="https://github.com/RichardDally/PySteamUpload",
     license="GNU Lesser General Public License v3.0",
     install_requires=requirements,
     packages=["pysteamupload"],
-    package_dir={"pysteamupload": "pysteamupload"},
-    package_data={"pysteamupload": ["templates/*.txt"]},
-    include_package_data=True,
     author_email="r.dally@proton.me",
     long_description=long_description,
     long_description_content_type="text/markdown",

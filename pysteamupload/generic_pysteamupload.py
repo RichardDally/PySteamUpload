@@ -21,7 +21,7 @@ class GenericPySteamUpload:
             logger.info("SteamCMD seems not installed, downloading it.")
             self.download_steamcmd()
             self.extract_steamcmd()
-        self.setup_steam_guard()
+        # self.setup_steam_guard()
 
     def get_archive_path(self) -> Path:
         # Windows example: C:\Users\rdall\AppData\Local\Temp\SteamCMD\steamcmd.zip
@@ -55,6 +55,9 @@ class GenericPySteamUpload:
         logger.info("Extraction is complete.")
 
     def setup_steam_guard(self) -> None:
+        """
+        DEPRECATED
+        """
         if not self.get_config_vdf_path().exists():
             self._create_config_vdf()
         if not self.get_ssfn_path().exists():
@@ -68,6 +71,9 @@ class GenericPySteamUpload:
         return self.root_directory / "config" / self.get_config_vdf_filename()
 
     def _create_config_vdf(self) -> None:
+        """
+        DEPRECATED
+        """
         config_dir = Path(self.root_directory, "config")
         config_dir.mkdir(exist_ok=True)
         self._create_file_from_base64(
@@ -85,6 +91,9 @@ class GenericPySteamUpload:
         return self.root_directory / self.get_ssfn_filename()
 
     def _create_ssfn(self) -> None:
+        """
+        DEPRECATED
+        """
         self._create_file_from_base64(
             environ_key="STEAM_SSFN_FILE_CONTENT",
             destination=self.get_ssfn_path(),
@@ -110,7 +119,7 @@ class GenericPySteamUpload:
             subprocess.check_call(subprocess_args, timeout=timeout_in_seconds)
             return 0
         except subprocess.TimeoutExpired:
-            # SteamGuard is probably waiting asking for a 2 factor authentication password
+            # SteamGuard is probably waiting asking for a 2-factor authentication password
             logger.error(f"SteamCMD timed out ({timeout_in_seconds} seconds)")
         except subprocess.CalledProcessError as exception:
             if exception.returncode != 7:
@@ -163,6 +172,11 @@ class GenericPySteamUpload:
         filename = self.get_app_build_path()
         with open(filename, "w") as f:
             vdf.dump(app_build, f, pretty=True)
+
+    def initialize_only(self) -> int:
+        logger.info(f"Initialize SteamCMD with your password/SteamGuard.")
+        logger.info(f"Execute to initialize your steamcmd : {self.get_steamcmd_path()} +login username password +quit")
+        return 0
 
     def upload(
             self,

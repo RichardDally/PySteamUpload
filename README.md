@@ -19,6 +19,6 @@ Execute then initialize SteamCMD with provided command:<br>
 
 ### Packaging
 
-- `python -m install twine setuptools wheel`
+- `python -m pip install twine setuptools wheel`
 - `python setup.py sdist bdist_wheel`
 - `python -m twine upload dist/*`
